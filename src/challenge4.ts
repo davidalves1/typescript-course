@@ -12,9 +12,23 @@ class Produto {
     public preco: number,
     public desconto: number = 0
   ) {}
+
+  resumo() {
+    return `
+      O produto ${this.nome} custa
+      ${Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' })
+        .format(this.precoComDesconto())} (${this.desconto * 100}% off)
+    `;
+  }
+
+  precoComDesconto() {
+    return this.preco * (1 - this.desconto);
+  }
 }
 
-const produto1 = new Produto('Lápis', 3, 0.2)
+const produto1 = new Produto('Lápis', 3, 0.25)
 const produto2 = new Produto('Caneta', 5)
 
 console.log(produto1, produto2);
+console.log(produto1.resumo())
+console.log(produto2.resumo())
