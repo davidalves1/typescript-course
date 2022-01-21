@@ -50,7 +50,11 @@ class Estagiario {
   }
 
   set primeiroNome(nome: string) {
-    this._primeiroNome = nome;
+    if (nome.length >= 3) {
+      this._primeiroNome = nome;
+    } else {
+      this._primeiroNome = '';
+    }
   }
 }
 
