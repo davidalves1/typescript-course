@@ -1,3 +1,5 @@
+// Aplicar decorator na classe
+
 type Usuario = {
   nome: string;
   email: string;
@@ -34,3 +36,41 @@ class MudancaAdministrativa {
 
 
 new MudancaAdministrativa().critico()
+
+// Aplicar decorator no método
+
+class ContaCorrente {
+  constructor(private saldo: number = 0) {}
+
+  @freeze
+  saque(valor: number) {
+    if (valor <= this.saldo) {
+      this.saldo -= valor;
+
+      return true
+    }
+
+    return false
+  }
+
+  @freeze
+  getSaldo() {
+    return this.saldo;
+  }
+}
+
+const conta = new ContaCorrente(10000);
+
+console.log('Saldo:', conta.getSaldo());
+conta.saque(3004);
+
+// conta.getSaldo = function () {
+//   return this['saldo'] + 4000;
+// }
+
+console.log('Saldo:', conta.getSaldo());
+
+function freeze(instance: any, methodName: string, descriptor: PropertyDescriptor) {
+  console.log(instance, methodName);
+  descriptor.writable = false;
+}
